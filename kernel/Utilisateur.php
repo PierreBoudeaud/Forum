@@ -2,65 +2,60 @@
 	include('Model.php');
 	class Utilisateur extends Model{
 		
-		private $idUtilisateur, $pseudoUtilisateur, $eMailUtilisateur, $mDPUtilisateur;
+		protected $idutilisateur;
+		protected $pseudoutilisateur;
+		protected $emailutilisateur;
+		protected $mdputilisateur;
 		
 		//Attributs techniques
-		protected $table = 'utilisateur', $pk = 'idUtilisateur';
+		protected $table = 'utilisateur', $pk = 'idutilisateur';
 		
 		public function __construct($id, $pseudo, $eMail, $mDP){
-			$this->idUtilisateur = $id;
-			$this->pseudoUtilisateur = $pseudo;
-			$this->eMailUtilisateur = $eMail;
-			$this->mDPUtilisateur = $mDP;
+			$this->idutilisateur = $id;
+			$this->pseudoutilisateur = $pseudo;
+			$this->emailutilisateur = $eMail;
+			$this->mdputilisateur = $mDP;
 			$this->table = 'utilisateur';
-			$this->pk = 'idUtilisateur';
+			$this->pk = 'idutilisateur';
 		}
 
 		public function getId(){
-			return $this->idUtilisateur;
+			return $this->idutilisateur;
 		}
 
 		public function getPseudo(){
-			return $this->pseudoUtilisateur;
+			return $this->pseudoutilisateur;
 		}
 
 		public function getEMail(){
-			return $this->eMailUtilisateur;
+			return $this->emailutilisateur;
 		}
 
 		public function getmDP(){
-			return $this->mDPUtilisateur;
+			return $this->mdputilisateur;
 		}
 
 		public function setId($id){
-			$this->idUtilisateur = $id;
+			$this->idutilisateur = $id;
 		}
 
 		public function setPseudo($pseudo){
-			$this->pseudoUtilisateur = $pseudo;
+			$this->pseudoutilisateur = $pseudo;
 		}
 
 		public function setEMail($eMail){
-			$this->eMailUtilisateur = $eMail;
+			$this->emailutilisateur = $eMail;
 		}
 
 		public function setmDP($mDP){
-			$this->mDPUtilisateur = $mDP;
-		}
-
-		//Créer utilisateur dans la bdd
-		public function create(){
-			$bdd = $this->connexion();
-			$req = "INSERT INTO UTILISATEUR(pseudoutilisateur, emailutilisateur, mdputilisateur) VALUES('" . $this->pseudo . "', '" . $this->eMail . "', '" . $this->mDP . "')";
-			echo "<br>".$req."<br>";
-			$bdd->exec($req);
+			$this->mdputilisateur = $mDP;
 		}
 
 		//Mise à jour de la bdd
-		public function update($idUtilisateur, $newPseudo, $newEmailUtilisateur, $newMdpUtilisateur){
-			$bdd = $this->connexion();
-			$req = "UPDATE UTILISATEUR SET pseudoutilisateur = '$newPseudo', emailutilisateur = '$newEmailUtilisateur', mdputilisateur = '$newMdpUtilisateur' WHERE idUtilisateur = $idUtilisateur";
+		public function update($idutilisateur, $newPseudo, $newemailutilisateur, $newmdputilisateur){
+			$req = "UPDATE UTILISATEUR SET pseudoutilisateur = '$newPseudo', emailutilisateur = '$newemailutilisateur', mdputilisateur = '$newmdputilisateur' WHERE idutilisateur = $idutilisateur";
 			echo $req;
+			$bdd = $this->connexion();
 			$bdd->exec($req);
 		}
 
