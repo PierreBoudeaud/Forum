@@ -8,7 +8,8 @@
 		protected $mdputilisateur;
 		
 		//Attributs techniques
-		protected $table = 'utilisateur', $pk = 'idutilisateur';
+		protected $table;
+		protected $pk;
 		
 		public function __construct($id, $pseudo, $eMail, $mDP){
 			$this->idutilisateur = $id;
@@ -49,14 +50,6 @@
 
 		public function setmDP($mDP){
 			$this->mdputilisateur = $mDP;
-		}
-
-		//Mise à jour de la bdd
-		public function update($idutilisateur, $newPseudo, $newemailutilisateur, $newmdputilisateur){
-			$req = "UPDATE UTILISATEUR SET pseudoutilisateur = '$newPseudo', emailutilisateur = '$newemailutilisateur', mdputilisateur = '$newmdputilisateur' WHERE idutilisateur = $idutilisateur";
-			echo $req;
-			$bdd = $this->connexion();
-			$bdd->exec($req);
 		}
 
 	}

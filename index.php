@@ -16,5 +16,5 @@
 	print_r($find);
 	$util->read(5);
 	echo "<br><br>Utilisateur : ".$util->getId()." ".$util->getPseudo()." ".$util->getEMail()." ".$util->getMDP();
-	print_r($util);
+	$util->update(1);
 ?>
