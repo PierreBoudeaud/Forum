@@ -12,6 +12,9 @@
 	$str = "Utilisateur : ".$util->getId()." ".$util->getPseudo()." ".$util->getEMail()." ".$util->getMDP();
 	echo $str;*/
 	//$util->delete(4);
+	$find = $util->find("pseudoutilisateur='deltadu17'");
+	print_r($find);
 	$util->read(5);
 	echo "<br><br>Utilisateur : ".$util->getId()." ".$util->getPseudo()." ".$util->getEMail()." ".$util->getMDP();
+	print_r($util);
 ?>

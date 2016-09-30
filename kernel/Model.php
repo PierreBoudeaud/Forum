@@ -24,6 +24,7 @@
 			return $DB;
 		}
 		
+		
 		//Créer utilisateur dans la bdd
 		public function create(){
 			$req = "INSERT INTO {$this->table} VALUES(";
@@ -68,22 +69,36 @@
 		*		@date 30/09/2016
 		*/
 		public function read($id){
-			//Lecture de la bdd
 			$req = "SELECT * FROM {$this->table} WHERE {$this->pk} = $id";
 			$bdd = $this->connexion();
 			$rep = $bdd->query($req);
 			$result = $rep->fetch(PDO::FETCH_ASSOC);
 			$rep->closeCursor();
-			echo "Avant<br>";
-			print_r($this);
-			echo "<br><br>";
 			foreach($result as $key=>$val){
 				$this->$key = $val;
 				
 			}
-			echo "Après<br>";
-			print_r($this);
-
+		}
+		
+		
+		/**
+		*		read - lit une ligne de la base de données
+		*		table et pk appartiennent à l'objet
+		*
+		*		@param id : clé primaire de la table
+		*		@author BOUDEAUD P
+		*		@date 30/09/2016
+		*/
+		public function find($condition){
+			$req = "SELECT * FROM {$this->table} WHERE {$condition}";
+			$bdd = $this->connexion();
+			$rep = $bdd->query($req);
+			$tmp[] = "";
+			while($result = $rep->fetch(PDO::FETCH_ASSOC)){
+					$tmp[] = $result;
+			}
+			$rep->closeCursor();
+			return($tmp);
 		}
 	}
 	
