@@ -1,14 +1,22 @@
 <?php
 	abstract class Model{
 		
-		protected $table;
-		protected $pk;
-		protected $attribTech = array('table', 'pk','attribTech');
+		private $table;
+		private $pk;
+		private $attribTech;
+		private $autoincrement;
 		
-		public function __construct(){
-			$this->table = "";
-			$this->pk = "";
-			//$this->attribTech =  array('table', 'pk','attribTech');
+		/**
+		*		__construct - Construit l'objet Model
+		*
+		*		@author BOUDEAUD P
+		*		@date 30/09/2016
+		*/
+		public function __construct($table, $pk, $autoincrement){
+			$this->table = $table;
+			$this->pk = $pk;
+			$this->autoincrement = $autoincrement;
+			$this->attribTech = array('table', 'pk','attribTech', 'autoincrement');
 		}
 		
 		/**
@@ -16,15 +24,14 @@
 		*		Charge les informations de connexion depuis un fichier configuration (.ini)
 		*
 		*		@return La connexion à la base de donnée
-		*		@
 		*		@author BOUDEAUD P
 		*		@date 30/09/2016
 		*/
 		protected function connexion(){
-			$ini_parse = parse_ini_file("/cfg/bdd.ini");//Fichier de configuration
-			$dsn = $ini_parse['type'].":dbname=".$ini_parse['dbName'].";host=".$ini_parse['host'].";port=".$ini_parse['port'];
+			$ini_parse = parse_ini_file("/cfg/bdd.ini", true);//Fichier de configuration
+			$dsn = $ini_parse['database']['type'].":dbname=".$ini_parse['database']['dbName'].";host=".$ini_parse['database']['host'].";port=".$ini_parse['database']['port'];
 			try{
-				$DB = new PDO($dsn, $ini_parse['pseudo'], $ini_parse['mdp']);
+				$DB = new PDO($dsn, $ini_parse['database']['pseudo'], $ini_parse['database']['mdp']);
 			}catch(PDOException $e){
 				echo "Connexion échouée : ".$e->getMessage();
 				$DB = null;
@@ -37,38 +44,32 @@
 		*		create - crée une ligne de la base de données
 		*		table appartient à l'objet
 		*
+		*		@see Model::connexion()	crée la connexion avec la base de données
 		*		@author BOUDEAUD P
 		*		@date 30/09/2016
 		*/
 		public function create(){
-			$req = "INSERT INTO {$this->table}(";
-			$notFirstComma = 0;
+			$prop = "";
+			$value = "";
+			
+			if($this->autoincrement){
+				$this->attribTech[] = $this->pk;
+			}
 			foreach($this as $key=>$val){
-				if(!in_array($key, $this->attribTech) && $key != $this->pk){
-					if($notFirstComma > 0){
-						$req = $req . ", ";
-					}
-					$req = $req . $key;
-					$notFirstComma++;
+				if(!in_array($key, $this->attribTech)){
+					$prop = "{$prop} {$key},";
+					$value = "{$value} {$val},";
 				}
 			}
-			$req = "{$req}) VALUES(";
-			$notFirstComma = 0;
-			foreach($this as $key=>$val){
-				if(!in_array($key, $this->attribTech) && $key != $this->pk){
-					if($notFirstComma > 0){
-						$req = $req . ", ";
-					}
-					$req = $req . $val;
-					$notFirstComma++;
-				}
-			}
-			$req = $req . ")";
+			$prop = substr($prop, 0, -1);
+			$value = substr($value, 0, -1);
+			$req = "INSERT INTO {$this->table}({$prop}) VALUES({$value})";
 			echo "<br>".$req."<br>";
-			//$bdd = $this->connexion();
-			//$bdd->exec($req);
-			//$bdd = null;
+			$bdd = $this->connexion();
+			$bdd->exec($req);
+			$bdd = null;
 		}
+		
 		
 		
 		/**
@@ -76,27 +77,30 @@
 		*		table et pk appartient à l'objet
 		*
 		*		@param in $id : clé primaire de la table
+		*		@see Model::connexion()	crée la connexion avec la base de données
 		*		@author BOUDEAUD P
 		*		@date 30/09/2016
 		*/
-		public function update($id){
-			
+		public function update(){
+			$tabAttrib = $this->attribTech;
 			$req = "UPDATE {$this->table} SET ";
-			$notFirstComma = 0;
+			
+			if(!in_array($this->pk, $tabAttrib)){
+				$tabAttrib[] = $this->pk;
+			}
+			
 			foreach($this as $key=>$val){
-				if(!in_array($key, $this->attribTech) && $key != $this->pk){
-					if($notFirstComma > 0){
-						$req = $req . ", ";
-					}
-					$req = "{$req}{$key} = '{$val}'";
-					$notFirstComma++;
+				if(!in_array($key, $tabAttrib)){
+					$req = "{$req} {$key} = '{$val},'";
 				}
 			}
-			$req = $req . " WHERE {$this->pk} = {$id}";
+			$req = substr($req, 0, -1);
+			$pkBdd = $this->pk;
+			$req = $req . " WHERE {$this->pk} = {$this->$pkBdd}";
 			echo "<br>".$req."<br>";
-			//$bdd = $this->connexion();
-			//$bdd->exec($req);
-			//$bdd = null;
+			$bdd = $this->connexion();
+			$bdd->exec($req);
+			$bdd = null;
 		}
 		
 		
@@ -105,6 +109,7 @@
 		*		table et pk appartiennent à l'objet
 		*
 		*		@param in $id : clé primaire de la table
+		*		@see Model::connexion()	crée la connexion avec la base de données
 		*		@author BOUDEAUD P
 		*		@date 30/09/2016
 		*/
@@ -123,6 +128,7 @@
 		*		table et pk appartiennent à l'objet
 		*
 		*		@param in $id : clé primaire de la table
+		*		@see Model::connexion()	crée la connexion avec la base de données
 		*		@author BOUDEAUD P
 		*		@date 30/09/2016
 		*/
@@ -145,6 +151,7 @@
 		*		table appartient à l'objet
 		*
 		*		@param in $condition : clé primaire de la table
+		*		@see Model::connexion()	crée la connexion avec la base de données
 		*		@author BOUDEAUD P
 		*		@date 30/09/2016
 		*/

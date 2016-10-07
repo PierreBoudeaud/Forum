@@ -7,17 +7,12 @@
 		protected $emailutilisateur;
 		protected $mdputilisateur;
 		
-		//Attributs techniques
-		protected $table;
-		protected $pk;
-		
 		public function __construct($id, $pseudo, $eMail, $mDP){
+			parent::__construct('utilisateur', 'idutilisateur', true);
 			$this->idutilisateur = $id;
 			$this->pseudoutilisateur = $pseudo;
 			$this->emailutilisateur = $eMail;
 			$this->mdputilisateur = $mDP;
-			$this->table = 'utilisateur';
-			$this->pk = 'idutilisateur';
 		}
 
 		public function getId(){
