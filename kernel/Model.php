@@ -33,7 +33,7 @@
 			try{
 				$DB = new PDO($dsn, $ini_parse['database']['pseudo'], $ini_parse['database']['mdp']);
 			}catch(PDOException $e){
-				echo "Connexion échouée : ".$e->getMessage();
+				echo "Connexion échouée : {$e->getMessage()}</br>";
 				$DB = null;
 			}
 			return $DB;
@@ -52,13 +52,14 @@
 			$prop = "";
 			$value = "";
 			
-			if($this->autoincrement){
+			//Si la clé est autoincrement 
+			if(!in_array($this->pk, $this->attribTech) && $this->autoincrement){
 				$this->attribTech[] = $this->pk;
 			}
 			foreach($this as $key=>$val){
 				if(!in_array($key, $this->attribTech)){
 					$prop = "{$prop} {$key},";
-					$value = "{$value} {$val},";
+					$value = "{$value} '{$val}',";
 				}
 			}
 			$prop = substr($prop, 0, -1);
@@ -91,12 +92,11 @@
 			
 			foreach($this as $key=>$val){
 				if(!in_array($key, $tabAttrib)){
-					$req = "{$req} {$key} = '{$val},'";
+					$req = "{$req} {$key} = '{$val}',";
 				}
 			}
 			$req = substr($req, 0, -1);
-			$pkBdd = $this->pk;
-			$req = $req . " WHERE {$this->pk} = {$this->$pkBdd}";
+			$req = $req . " WHERE {$this->pk} = '{$this->{$this->pk}}'";
 			echo "<br>".$req."<br>";
 			$bdd = $this->connexion();
 			$bdd->exec($req);
@@ -115,8 +115,8 @@
 		*/
 		public function delete($id){
 			
-			$req = "DELETE FROM {$this->table} WHERE {$this->pk} = $id";
-			echo $req;
+			$req = "DELETE FROM {$this->table} WHERE {$this->pk} = '{$id}'";
+			echo "<br>$req</br>";
 			$bdd = $this->connexion();
 			$bdd->exec($req);
 			$bdd = null;
@@ -133,12 +133,13 @@
 		*		@date 30/09/2016
 		*/
 		public function read($id){
-			$req = "SELECT * FROM {$this->table} WHERE {$this->pk} = $id";
+			$req = "SELECT * FROM {$this->table} WHERE {$this->pk} = {$id}";
 			$bdd = $this->connexion();
 			$rep = $bdd->query($req);
+			$bdd = null;//Déconnexion de la bdd
 			$result = $rep->fetch(PDO::FETCH_ASSOC);
 			$rep->closeCursor();
-			$bdd = null;
+			
 			foreach($result as $key=>$val){
 				$this->$key = $val;
 				
@@ -159,13 +160,22 @@
 			$req = "SELECT * FROM {$this->table} WHERE {$condition}";
 			$bdd = $this->connexion();
 			$rep = $bdd->query($req);
+			$bdd = null;
 			$tmp[] = "";
 			while($result = $rep->fetch(PDO::FETCH_ASSOC)){
 					$tmp[] = $result;
 			}
 			$rep->closeCursor();
-			$bdd = null;
+			
 			return($tmp);
+		}
+		
+		public function lineExist($id){
+			$req = "SELECT * FROM {$this->table} WHERE {$this->pk} = {$id}";
+			$bdd = $this->connexion();
+			$rep = $bdd->query($req);
+			$bdd = null;
+			
 		}
 	}
 	

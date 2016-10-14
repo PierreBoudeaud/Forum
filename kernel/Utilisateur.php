@@ -1,5 +1,4 @@
 <?php
-	include('Model.php');
 	class Utilisateur extends Model{
 		
 		protected $idutilisateur;
@@ -8,6 +7,7 @@
 		protected $mdputilisateur;
 		
 		public function __construct($id, $pseudo, $eMail, $mDP){
+			//parent:: <=> super en Java
 			parent::__construct('utilisateur', 'idutilisateur', true);
 			$this->idutilisateur = $id;
 			$this->pseudoutilisateur = $pseudo;
