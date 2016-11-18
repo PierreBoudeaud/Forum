@@ -1,4 +1,7 @@
 <?php
+	/**
+	*		@author LUTAU T
+	*/
 	abstract class Model{
 		
 		private $table;
@@ -7,10 +10,11 @@
 		private $autoincrement;
 		
 		/**
-		*		__construct - Construit l'objet Model
+		*		__construct - Constructeur de la classe Model
+		*		$table et $pk font partis de l'objet Model.
 		*
-		*		@author BOUDEAUD P
-		*		@date 30/09/2016
+		*		@author LUTAU T
+		*		@date 27/09/2016
 		*/
 		public function __construct($table, $pk, $autoincrement){
 			$this->table = $table;
@@ -19,21 +23,31 @@
 			$this->attribTech = array('table', 'pk','attribTech', 'autoincrement');
 		}
 		
+		public function lineExist($id){
+			$req = "SELECT COUNT(*) FROM {$this->table} WHERE {$this->pk} = '{$id}'";
+			$DB = $this->connexion();
+			$rep = $DB->prepare($req);
+			$rep->execute();
+			$row = $rep->fetch();
+			return($row['0'] > 0);
+			
+		}
+		
 		/**
 		*		connexion - Connexion à la base de données
 		*		Charge les informations de connexion depuis un fichier configuration (.ini)
 		*
-		*		@return La connexion à la base de donnée
+		*		@return PDO La connexion à la base de donnée
 		*		@author BOUDEAUD P
-		*		@date 30/09/2016
+		*		@date 04/10/2016
 		*/
 		protected function connexion(){
-			$ini_parse = parse_ini_file("/cfg/bdd.ini", true);//Fichier de configuration
+			$ini_parse = parse_ini_file(CONF."bdd.ini", true);//Fichier de configuration
 			$dsn = $ini_parse['database']['type'].":dbname=".$ini_parse['database']['dbName'].";host=".$ini_parse['database']['host'].";port=".$ini_parse['database']['port'];
 			try{
 				$DB = new PDO($dsn, $ini_parse['database']['pseudo'], $ini_parse['database']['mdp']);
 			}catch(PDOException $e){
-				echo "Connexion échouée : {$e->getMessage()}</br>";
+				echo "Connexion échouée : ".$e->getMessage();
 				$DB = null;
 			}
 			return $DB;
@@ -41,141 +55,144 @@
 		
 		
 		/**
-		*		create - crée une ligne de la base de données
-		*		table appartient à l'objet
+		*		create - Créer un enregistrement dans la base de données
+		*		Créer un enregistrement à partir de l'objet courant
 		*
-		*		@see Model::connexion()	crée la connexion avec la base de données
-		*		@author BOUDEAUD P
-		*		@date 30/09/2016
+		*		@see Model::connexion()		Connexion à la base
+		*		@author LUTAU T
+		*		@date 27/09/2016
 		*/
 		public function create(){
-			$prop = "";
-			$value = "";
+				$prop = "";
+				$value = "";
 			
-			//Si la clé est autoincrement 
-			if(!in_array($this->pk, $this->attribTech) && $this->autoincrement){
-				$this->attribTech[] = $this->pk;
-			}
-			foreach($this as $key=>$val){
-				if(!in_array($key, $this->attribTech)){
-					$prop = "{$prop} {$key},";
-					$value = "{$value} '{$val}',";
+				if($this->autoincrement){
+					$this->attribTech[] = $this->pk;
 				}
-			}
-			$prop = substr($prop, 0, -1);
-			$value = substr($value, 0, -1);
-			$req = "INSERT INTO {$this->table}({$prop}) VALUES({$value})";
-			echo "<br>".$req."<br>";
-			$bdd = $this->connexion();
-			$bdd->exec($req);
-			$bdd = null;
+				foreach($this as $key=>$val){
+					if(!in_array($key, $this->attribTech)){
+						$prop = "{$prop} {$key},";
+						$value = "{$value} '{$val}',";
+					}
+				}
+				$prop = substr($prop, 0, -1);
+				$value = substr($value, 0, -1);
+				$req = "INSERT INTO {$this->table}({$prop}) VALUES({$value})";
+				echo "<br>".$req."<br>";
+				$bdd = $this->connexion();
+				$bool = $bdd->exec($req);
+				$bdd = null;
+				return $bool;
 		}
 		
 		
 		
 		/**
-		*		update - modifie une ligne de la base de données
-		*		table et pk appartient à l'objet
+		*		update - Modifier un enregistrement dans la base de données
+		*		Modifie un enregistrement à partir de l'identifiant de l'objet courant
 		*
-		*		@param in $id : clé primaire de la table
-		*		@see Model::connexion()	crée la connexion avec la base de données
-		*		@author BOUDEAUD P
-		*		@date 30/09/2016
+		*		@param String $id identifiant de l'enregistrement à modifier
+		*		@see Model::connexion()		Connexion à la base
+		*		@author LUTAU T
+		*		@date 27/09/2016
 		*/
 		public function update(){
-			$tabAttrib = $this->attribTech;
-			$req = "UPDATE {$this->table} SET ";
+			$bool = $this->lineExist($this->{$this->pk});
+			if($bool){
+				$tabAttrib = $this->attribTech;
+				$req = "UPDATE {$this->table} SET ";
 			
-			if(!in_array($this->pk, $tabAttrib)){
-				$tabAttrib[] = $this->pk;
-			}
-			
-			foreach($this as $key=>$val){
-				if(!in_array($key, $tabAttrib)){
-					$req = "{$req} {$key} = '{$val}',";
+				if(!in_array($this->pk, $tabAttrib)){
+					$tabAttrib[] = $this->pk;
 				}
+			
+				foreach($this as $key=>$val){
+					if(!in_array($key, $tabAttrib)){
+						$req = "{$req} {$key} = '{$val},'";
+					}
+				}
+				$req = substr($req, 0, -1);
+				$req = $req . " WHERE {$this->pk} = {$this->{$this->pk}}";
+				echo "<br>".$req."<br>";
+				$bdd = $this->connexion();
+				$bdd->exec($req);
+				$bdd = null;
 			}
-			$req = substr($req, 0, -1);
-			$req = $req . " WHERE {$this->pk} = '{$this->{$this->pk}}'";
-			echo "<br>".$req."<br>";
-			$bdd = $this->connexion();
-			$bdd->exec($req);
-			$bdd = null;
+			return $bool;
 		}
 		
 		
 		/**
-		*		delete - Supprime une ligne de la base de données
-		*		table et pk appartiennent à l'objet
+		*		delete - Suppression un enregistrement de la base de données
+		*		Supprime un enregistrement dans la base de données en fonction de l'id
 		*
-		*		@param in $id : clé primaire de la table
-		*		@see Model::connexion()	crée la connexion avec la base de données
-		*		@author BOUDEAUD P
-		*		@date 30/09/2016
+		*		@param String $id identifiant de l'enregistrement à supprimer
+		*		@see Model::connexion()		 Connexion à la base
+		*		@author LUTAU T
+		*		@date 27/09/2016
 		*/
 		public function delete($id){
-			
-			$req = "DELETE FROM {$this->table} WHERE {$this->pk} = '{$id}'";
-			echo "<br>$req</br>";
-			$bdd = $this->connexion();
-			$bdd->exec($req);
-			$bdd = null;
+			$bool = $this->lineExist($id);
+			if($bool){
+				$req = "DELETE FROM {$this->table} WHERE {$this->pk} = '{$id}'";
+				echo $req;
+				$bdd = $this->connexion();
+				$bdd->exec($req);
+				$bdd = null;
+			}
+			return $bool;
 		}
 		
 		
 		/**
-		*		read - lit une ligne de la base de données
-		*		table et pk appartiennent à l'objet
+		*		read - Lire un enregistrement
+		*		Lit un enregistrement en fonction de l'id
 		*
-		*		@param in $id : clé primaire de la table
-		*		@see Model::connexion()	crée la connexion avec la base de données
-		*		@author BOUDEAUD P
-		*		@date 30/09/2016
+		*		@param String $id identifiant de l'enregistrement à lire
+		*		@see Model::connexion()		Connexion à la base
+		*		@author LUTAU T
+		*		@date 27/09/2016
 		*/
 		public function read($id){
-			$req = "SELECT * FROM {$this->table} WHERE {$this->pk} = {$id}";
-			$bdd = $this->connexion();
-			$rep = $bdd->query($req);
-			$bdd = null;//Déconnexion de la bdd
-			$result = $rep->fetch(PDO::FETCH_ASSOC);
-			$rep->closeCursor();
-			
-			foreach($result as $key=>$val){
-				$this->$key = $val;
+			$bool = $this->lineExist($id);
+			if($bool){
+				$req = "SELECT * FROM {$this->table} WHERE {$this->pk} = '{$id}'";
+				$bdd = $this->connexion();
+				$rep = $bdd->query($req);
+				$result = $rep->fetch(PDO::FETCH_ASSOC);
+				$rep->closeCursor();
+				$bdd = null;
+				foreach($result as $key=>$val){
+					$this->$key = $val;
 				
+				}
 			}
+			return $bool;
 		}
 		
 		
 		/**
-		*		find - cherche une ligne de la base de données
-		*		table appartient à l'objet
+		*		find - trouver un enregistrement
+		*		Trouve un enregistrement en fonction d'une condition
 		*
-		*		@param in $condition : clé primaire de la table
-		*		@see Model::connexion()	crée la connexion avec la base de données
-		*		@author BOUDEAUD P
-		*		@date 30/09/2016
+		*		@param String $condition condition pour trier les enregistrements à trouver
+		*		@see Model::connexion()		Connexion à la base
+		*		@author LUTAU T
+		*		@date 27/09/2016
 		*/
 		public function find($condition){
 			$req = "SELECT * FROM {$this->table} WHERE {$condition}";
 			$bdd = $this->connexion();
 			$rep = $bdd->query($req);
-			$bdd = null;
-			$tmp[] = "";
 			while($result = $rep->fetch(PDO::FETCH_ASSOC)){
 					$tmp[] = $result;
 			}
 			$rep->closeCursor();
-			
-			return($tmp);
-		}
-		
-		public function lineExist($id){
-			$req = "SELECT * FROM {$this->table} WHERE {$this->pk} = {$id}";
-			$bdd = $this->connexion();
-			$rep = $bdd->query($req);
 			$bdd = null;
-			
+			if(empty($tmp)){
+				$tmp[][] = null;
+			}
+		return($tmp);
 		}
 	}
 	

@@ -6,6 +6,12 @@
 		protected $emailutilisateur;
 		protected $mdputilisateur;
 		
+		/**
+		*		__construct - Construit l'objet Model
+		*
+		*		@author BOUDEAUD P
+		*		@date 30/09/2016
+		*/
 		public function __construct($id, $pseudo, $eMail, $mDP){
 			//parent:: <=> super en Java
 			parent::__construct('utilisateur', 'idutilisateur', true);
@@ -15,6 +21,13 @@
 			$this->mdputilisateur = $mDP;
 		}
 
+		/**
+		*		getId - Retourne l'id de l'utilisateur
+		*
+		*		@return $this->idutilisateur 
+		*		@author BOUDEAUD P
+		*		@date 30/09/2016
+		*/
 		public function getId(){
 			return $this->idutilisateur;
 		}
