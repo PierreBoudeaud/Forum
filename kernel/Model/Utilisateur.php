@@ -1,4 +1,5 @@
 <?php
+	include_once(APP.'Model.php');
 	class Utilisateur extends Model{
 		
 		protected $idutilisateur;
@@ -12,9 +13,9 @@
 		*		@author BOUDEAUD P
 		*		@date 30/09/2016
 		*/
-		public function __construct($id, $pseudo, $eMail, $mDP){
+		public function __construct($id=null, $pseudo=null, $eMail=null, $mDP=null){
 			//parent:: <=> super en Java
-			parent::__construct('utilisateur', 'idutilisateur', true);
+			parent::__construct('utilisateur', 'idutilisateur', true, null);
 			$this->idutilisateur = $id;
 			$this->pseudoutilisateur = $pseudo;
 			$this->emailutilisateur = $eMail;

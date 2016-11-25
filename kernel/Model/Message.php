@@ -1,20 +1,21 @@
 <?php
+	include_once(APP.'Model.php');
 	class Message extends Model{
 		protected $idmessage;
 		protected $contenumessage;
 		protected $datemessage;
 		protected $datemodificationmessage;
-		protected $idsujetmessage;
-		protected $idutilisateurmessage;
+		protected $sujetmessage;
+		protected $utilisateurmessage;
 		
-		public function __construct($id, $contenu, $date, $dateModif, $idSujet, $idUtil){
-			parent::__construct('message', 'idmessage', true);
+		public function __construct($id=null, $contenu=null, $date=null, $dateModif=null, $idSujet=null, $idUtil=null){
+			parent::__construct('message', 'idmessage', true, array('sujet' => 'sujetmessage', 'utilisateur' => 'utilisateurmessage'));
 			$this->idmessage = $id;
 			$this->contenumessage = $contenu;
 			$this->datemessage = $date;
 			$this->datemodificationmessage = $dateModif;
-			$this->idsujetmessage = $idSujet;
-			$this->idutilisateurmessage = $idUtil;
+			$this->sujetmessage = $idSujet;
+			$this->utilisateurmessage = $idUtil;
 		}
 		
 		public function getId(){
@@ -33,12 +34,12 @@
 			return $this->datemodificationmessage;
 		}
 		
-		public function getIdSujet(){
-			return $this->idsujetmessage;
+		public function getSujet(){
+			return $this->sujetmessage;
 		}
 		
-		public function getIdUtil(){
-			return $this->idutilisateurmessage;
+		public function getUtil(){
+			return $this->utilisateurmessage;
 		}
 		
 		public function setId($id){
@@ -57,12 +58,12 @@
 			$this->datemodificationmessage;
 		}
 		
-		public function setIdSujet($idSujet){
-			$this->idsujetmessage;
+		public function setSujet($Sujet){
+			$this->sujetmessage;
 		}
 		
-		public function setIdUtil($IdUtil){
-			$this->idutilisateurmessage;
+		public function setUtil($Util){
+			$this->utilisateurmessage;
 		}
 	}
 ?>

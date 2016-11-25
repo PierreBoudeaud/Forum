@@ -8,6 +8,7 @@
 		private $pk;
 		private $attribTech;
 		private $autoincrement;
+		private $fk;
 		
 		/**
 		*		__construct - Constructeur de la classe Model
@@ -16,15 +17,56 @@
 		*		@author LUTAU T
 		*		@date 27/09/2016
 		*/
-		public function __construct($table, $pk, $autoincrement){
+		public function __construct($table, $pk, $autoincrement, $fk){
 			$this->table = $table;
 			$this->pk = $pk;
 			$this->autoincrement = $autoincrement;
-			$this->attribTech = array('table', 'pk','attribTech', 'autoincrement');
+			$this->attribTech = array('table', 'pk','attribTech', 'autoincrement', 'fk');
+			$this->fk = $fk;
 		}
 		
+		/**
+		*	doBelongsToAssoc - Récupère l'id l'objet associé à celui ci
+		*	Ce traduit dans la base de donnée par un FOREIGN KEY | En privé pour qu'elle soit accessible uniquement par les méthodes de cette objet. Ex : Utilisateur n'y a pas accés.
+		* 	@see read() Lit la ligne dans la table de l'objet associé avec l'id passé en paramètre 
+		*/
+		private function doBelongsToAssoc(){
+			foreach($this->fk as $cle=>$valeur){
+				$id = $this->$valeur;
+				$this->$valeur = new $cle();
+				$this->$valeur->read($id);
+			}
+		}
+		
+		private function TabPk($id){
+			$taille = sizeof($this->pk);
+			for($i=0; $i < $taille; $i++){
+				$tab[$this->pk[$i]] = $id[$id];
+				$i++;
+			}
+			
+			return $tab;
+		}
+		
+		/**
+		*		lineExist - Test la ligne dans la BDD
+		*		Test si la ligne existe dans la BDD et renvoie un booleen
+		*
+		*		@param $id int Identifiant de la ligne
+		*		@return Boolean Retourne un booleen en fonction de si la ligne existe
+		*		@author BOUDEAUD P
+		*		@date 25/10/2016
+		*/
 		public function lineExist($id){
-			$req = "SELECT COUNT(*) FROM {$this->table} WHERE {$this->pk} = '{$id}'";
+			$tab = $this->TabPk($id);
+			$req = "SELECT COUNT(*) FROM {$this->table} WHERE";
+			print_r($tab);
+			foreach($tab as $pk=>$var){
+				 $req = $req."{$pk} = '{$var}'";
+			}
+			$req = substr($prop, 0, -1);
+			print_r($req);
+			
 			$DB = $this->connexion();
 			$rep = $DB->prepare($req);
 			$rep->execute();
@@ -166,6 +208,12 @@
 					$this->$key = $val;
 				
 				}
+				
+				if($this->fk != null){
+					$this->doBelongsToAssoc();
+				}
+				
+				
 			}
 			return $bool;
 		}
@@ -177,22 +225,29 @@
 		*
 		*		@param String $condition condition pour trier les enregistrements à trouver
 		*		@see Model::connexion()		Connexion à la base
+		*		@see Model::read($id)	Lit et crée un objet en fonction de l'id envoyé
 		*		@author LUTAU T
 		*		@date 27/09/2016
 		*/
-		public function find($condition){
-			$req = "SELECT * FROM {$this->table} WHERE {$condition}";
+		public function find($condition=null){
+			$req = "SELECT * FROM {$this->table}";
+			
+			if($condition = null){
+				$req = $req."WHERE {$condition}";
+			}
 			$bdd = $this->connexion();
 			$rep = $bdd->query($req);
-			while($result = $rep->fetch(PDO::FETCH_ASSOC)){
-					$tmp[] = $result;
+			$bdd = null;
+			
+			$tab = array();
+			while($result = $rep->fetch()){
+					$object = new $this->table();
+					$object->read($result[0]);
+					$tab[] = $object;
 			}
 			$rep->closeCursor();
-			$bdd = null;
-			if(empty($tmp)){
-				$tmp[][] = null;
-			}
-		return($tmp);
+			
+			return($tab);
 		}
 	}
 	

@@ -2,16 +2,16 @@
 	class Controller{
 		//Attribs
 		protected $viewvar = array();
-		protected $models = array();
-		public $layout = 'default';
+		//protected $models = array();
+		public $layout;
 		
-		/methods
-		public function __contruct($lesModel){
+		//methods
+		public function __construct($lesModel, $layout = "default"){
 			foreach($lesModel as $unModel){
 				$this->loadmodel($unModel);
 			}
+			$this->layout = $layout;
 		}
-		
 		/**
 		*	loadModel - Charge le model passé en paramètre
 		*	@param $model Le model à charger

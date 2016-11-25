@@ -1,17 +1,18 @@
 <?php
+	include_once(APP.'Model.php');
 	class Sujet extends Model{
 		
 		protected $idsujet;
 		protected $libellesujet;
 		protected $descriptionsujet;
-		protected $idutilisateursujet;
+		protected $utilisateursujet;
 		
-		public function __construct($id, $lib, $descrip, $idUtil){
-			parent::__construct('sujet', 'idsujet', true);
+		public function __construct($id=null, $lib=null, $descrip=null, $idUtil=null){
+			parent::__construct('sujet', 'idsujet', true, array('utilisateur' => 'utilisateursujet'));
 			$this->idsujet = $id;
 			$this->libellesujet = $lib;
 			$this->descriptionsujet = $descrip;
-			$this->idutilisateursujet = $idUtil;
+			$this->utilisateursujet = $idUtil;
 		}
 		
 		public function getId(){
@@ -27,7 +28,7 @@
 		}
 		
 		public function getIdUtil(){
-			return $this->idutilisateursujet;
+			return $this->utilisateursujet;
 		}
 		
 		public function setId($id){
@@ -43,7 +44,7 @@
 		}
 		
 		public function setIdUtil($idUtil){
-			$this->idutilisateursujet = $idUtil;
+			$this->utilisateursujet = $idUtil;
 		}
 	}
 ?>

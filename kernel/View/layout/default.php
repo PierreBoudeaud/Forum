@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="<?php echo CSS.layout.css ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo CSS.$this->layout.".css"; ?>">
 	<meta charset="utf-8">
-	<title></title>
+	<title><?php echo $script;?></title>
 </head>
 <body>
 
