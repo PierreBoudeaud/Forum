@@ -12,10 +12,13 @@
 	define("VIEW", ROOT."kernel/View/");//Racine du dossier View
 	define("APP", ROOT."kernel/");//Racine du dossier kernel (Classes généraliste)
 	define("CONF", ROOT."conf/");//Racine du dossier conf
-	define("CSS", WEBROOT."css/");//Racine du dossier conf
+	define("CSS", WEBROOT."css/");//Racine du dossier css
+	define("IMG", WEBROOT."img/");//Racine du dossier img
 	
-	/*
-	//Test Modèle Annule le lancement du script du MVC
+	
+	/*echo '<pre>';
+		print_r($_SERVER);//Affichage des informations serveur
+	echo '</pre>';*/
 	
 	//Test controller
 	if (empty($_GET['p'])){
@@ -36,7 +39,8 @@
 	}
 	
 	require_once(CONTROLLER.$controller.".php");
-	$objet = new $controller();
+	$temp = "controller_".$controller;
+	$objet = new $temp();
 
 	if(method_exists($objet, $method)){
 		unset($split['0']);
@@ -47,28 +51,9 @@
 		$controller = "erreur";
 		$method = "e404";
 		require_once(CONTROLLER.$controller.".php");
-		$erreur = new $controller();
+		$temp = "controller_".$controller;
+		$erreur = new $temp();
 		call_user_func_array(array($erreur, $method), array());
 	}
 	
-	echo "
-		<style>
-			r{
-				color : red;
-			}
-		</style>
-	";
-	
-	echo "ROOT : <r>".ROOT. "</r><br>WEBROOT : <r>".WEBROOT. "</r><br>MODEL : <r>".MODEL. "</r><br>CONTROLLER : <r>".CONTROLLER. "</r><br>VIEW : <r>".VIEW. "</r><br>APP : <r>".APP. "</r><br>CONF : <r>".CONF."</r>"; //[TEST] Affichage des CONSTANTES
-	*///Fin annulation script MVC
-	
-	
-	require_once(MODEL.'Message.php');
-	require_once(MODEL.'Sujet.php');
-	require_once(MODEL.'Utilisateur.php');
-	$unMessage = new Message();
-	$tab = $unMessage->find();
-	echo "<pre>";
-	print_r($tab);
-	echo "</pre>";
 	?>

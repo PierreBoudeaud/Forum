@@ -1,0 +1,18 @@
+// Accès depuis Debian au shell PostGreS
+#passer en root
+su - postgres
+
+// Commande HELP
+help
+
+// Commande QUITTER
+\q
+
+// Commande AJOUTER UTILISATEUR:
+adduser nouvUtil
+
+// Commande CREER NOUVELLE BDD:
+createuser nouvUtil
+createdb -O nouvBase nouvUtil
+
+// Connexion à la nouvBase en tant que nouvUtil

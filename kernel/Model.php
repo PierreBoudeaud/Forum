@@ -58,15 +58,7 @@
 		*		@date 25/10/2016
 		*/
 		public function lineExist($id){
-			$tab = $this->TabPk($id);
-			$req = "SELECT COUNT(*) FROM {$this->table} WHERE";
-			print_r($tab);
-			foreach($tab as $pk=>$var){
-				 $req = $req."{$pk} = '{$var}'";
-			}
-			$req = substr($prop, 0, -1);
-			print_r($req);
-			
+			$req = "SELECT COUNT(*) FROM {$this->table} WHERE {$this->pk} = '{$id}'";
 			$DB = $this->connexion();
 			$rep = $DB->prepare($req);
 			$rep->execute();
@@ -232,7 +224,7 @@
 		public function find($condition=null){
 			$req = "SELECT * FROM {$this->table}";
 			
-			if($condition = null){
+			if($condition != null){
 				$req = $req."WHERE {$condition}";
 			}
 			$bdd = $this->connexion();
@@ -242,12 +234,27 @@
 			$tab = array();
 			while($result = $rep->fetch()){
 					$object = new $this->table();
-					$object->read($result[0]);
-					$tab[] = $object;
+					$object->read($result['0']);
+					$tab[] = $object->totable();
 			}
 			$rep->closeCursor();
 			
 			return($tab);
+		}
+		
+		/**
+		*	totable - Envoie toute les valeurs de l'objet courant dans un tableau
+		*
+		*	@return Tab Tableau de valeurs
+		*/
+		public function totable(){
+			$tab = array();
+			foreach($this as $key=>$val){
+					if(!in_array($key, $this->attribTech)){
+						$tab[$key] = $val;
+					}
+				}
+			return $tab;
 		}
 	}
 	

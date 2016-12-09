@@ -57,7 +57,7 @@
 			$this->emailutilisateur = $eMail;
 		}
 
-		public function setmDP($mDP){
+		public function setMDP($mDP){
 			$this->mdputilisateur = $mDP;
 		}
 

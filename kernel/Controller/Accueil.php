@@ -1,6 +1,6 @@
 <?php
 	require_once(APP."Controller.php");
-	class Accueil extends Controller{
+	class controller_accueil extends Controller{
 		
 		protected $models;
 		

@@ -1,8 +1,12 @@
 <?php
 	require_once(APP."Controller.php");
-	class Erreur extends Controller{
+	class controller_erreur extends Controller{
+		
+		protected $models;
+		
 		public function __construct(){
-			parent:__construct();
+			$this->models = array();
+			parent::__construct($this->models);
 		}
 		
 		public function e404(){
