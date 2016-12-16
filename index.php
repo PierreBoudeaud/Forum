@@ -4,7 +4,7 @@
 	*	@date 08/11/2016
 	*
 	*/
-	
+	setlocale(LC_TIME, 'fr_FR.utf8','fra');
 	define("ROOT", str_replace("index.php", "", $_SERVER['SCRIPT_FILENAME']));//Racine du serveur
 	define("WEBROOT", str_replace("index.php", "", $_SERVER['SCRIPT_NAME']));//Racine du projet
 	define("MODEL", ROOT."kernel/Model/");//Racine du dossier Model

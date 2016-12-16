@@ -225,7 +225,7 @@
 			$req = "SELECT * FROM {$this->table}";
 			
 			if($condition != null){
-				$req = $req."WHERE {$condition}";
+				$req = $req." WHERE {$condition}";
 			}
 			$bdd = $this->connexion();
 			$rep = $bdd->query($req);
@@ -251,6 +251,9 @@
 			$tab = array();
 			foreach($this as $key=>$val){
 					if(!in_array($key, $this->attribTech)){
+                                            if(is_object($val)){
+                                                $val = $val->toTable();
+                                            }
 						$tab[$key] = $val;
 					}
 				}

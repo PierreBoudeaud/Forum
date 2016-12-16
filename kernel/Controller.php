@@ -37,7 +37,8 @@
 			
 			extract($this->viewvar);//tableau de données
 			ob_start();//Temporisation de l'affichage | attente avant affichage
-			require(VIEW.get_class($this).'/'.$script.'.php');//require interpréter
+                        $classView = str_replace("controller_", "",get_class($this));//Récupère le nom de la vue en enlevant le nom controller
+			require(VIEW.$classView.'/'.$script.'.php');//require interpréter
 			$content = ob_get_clean();//Récupération du contenu de la vue précédemment require
 			require(VIEW.'layout/'.$this->layout.'.php');
 			//appel du template

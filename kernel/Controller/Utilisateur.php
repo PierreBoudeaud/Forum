@@ -17,12 +17,12 @@
 			
 		}
 		
-		public function list(){
+		public function liste(){
 			$this->set($this->Utilisateur->find());
-			$this->render('list');
+			$this->render('liste');
 		}
 		
-		public function new(){
+		public function newf(){
 			$this->render('new');
 		}
 		
@@ -31,7 +31,7 @@
 			$this->Utilisateur->setEmail($_POST['email']);
 			$this->Utilisateur->setMDP($_POST['mdp']);
 			$this->Utilisateur->create();
-			$this->list();
+			$this->liste();
 		}
 	}
 ?>
