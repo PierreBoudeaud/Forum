@@ -2,6 +2,7 @@
 	/**
 	*		@author LUTAU T
 	*/
+	include_once(CONTROLLER."Erreur.php");
 	abstract class Model{
 		
 		private $table;
@@ -81,8 +82,11 @@
 			try{
 				$DB = new PDO($dsn, $ini_parse['database']['pseudo'], $ini_parse['database']['mdp']);
 			}catch(PDOException $e){
-				echo "Connexion échouée : ".$e->getMessage();
+				//echo "Connexion échouée : ".$e->getMessage();
 				$DB = null;
+				$Erreur = new controller_erreur();
+				$Erreur->E69();
+				exit();
 			}
 			return $DB;
 		}

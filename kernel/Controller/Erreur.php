@@ -12,5 +12,9 @@
 		public function e404(){
 			$this->render("e404");
 		}
+		
+		public function e69(){
+			$this->render("e69");
+		}
 	}
 ?>
