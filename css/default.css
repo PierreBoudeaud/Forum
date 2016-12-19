@@ -14,18 +14,27 @@ html, body{
 #content{
 	text-align: center;
 	background-color: #cccccc;
+	background-image: url(https://visualhunt.com/photos/l/1/aerial-view-of-typewriter-eyeglasses-and-notebook-on-table.jpg);
+	background-size: cover;
 	height: calc(100% - 175px);
+	color: white;
+}
 
+#content a{
+	text-decoration: none;
+	color: white;
 }
 
 #content table{
 	text-align : center;
+	color: white;
 }
 
 
 
 #header{
-	background-color: #424A8C;
+	/*background-color: #424A8C;*/
+	background-image:linear-gradient(#3c4e4e, #717368);
 	width: 100%;
 	height: 100px;
 	margin:0px;
@@ -34,6 +43,18 @@ html, body{
 
 #header a, #header a hover{
     color : red;
+    cursor: pointer;
+    text-align = center;
+    text-decoration: none;
+}
+
+.connexLib{
+	align = right;
+}
+
+.obligatoire, #obligatoireDesc{
+	display: none;
+	color : red;
 }
 
 
@@ -110,7 +131,8 @@ html, body{
 
 #footer{
         text-align: center;
-	background-color: #424A8C;
+	/*background-color: #424A8C;*/
+	background-image:linear-gradient(#717368, #3c4e4e);
 	height: 75px;
 	float:bottom;
 }	

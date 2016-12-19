@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	/**
 	*	@author BOUDEAUD P
 	*	@date 08/11/2016

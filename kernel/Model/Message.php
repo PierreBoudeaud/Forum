@@ -43,27 +43,27 @@
 		}
 		
 		public function setId($id){
-			$this->idmessage;
+			$this->idmessage = $id;
 		}
 		
 		public function setContenu($contenu){
-			$this->contenumessage;
+			$this->contenumessage = $contenu;
 		}
 		
 		public function setDate($date){
-			$this->datemessage;
+			$this->datemessage = $date;
 		}
 		
 		public function setDateModif($dateModif){
-			$this->datemodificationmessage;
+			$this->datemodificationmessage = $dateModif;
 		}
 		
 		public function setSujet($Sujet){
-			$this->sujetmessage;
+			$this->sujetmessage = $Sujet;
 		}
 		
 		public function setUtil($Util){
-			$this->utilisateurmessage;
+			$this->utilisateurmessage = $Util;
 		}
 	}
 ?>

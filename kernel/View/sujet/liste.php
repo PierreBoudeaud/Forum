@@ -1,6 +1,7 @@
     <div id='content'>
+        <meta charset="utf-8">
             <center>
-	<?php echo "<a href='".WEBROOT."sujet/newf'>Ajouter un sujet</a>";?>
+	<?php if(!empty($_SESSION['id'])){ echo "<a href='".WEBROOT."sujet/newf' style='color: gold'>Ajouter un sujet</a>";}?>
 		<table border=1>
 			<tr>
 				<th>Titre</th>

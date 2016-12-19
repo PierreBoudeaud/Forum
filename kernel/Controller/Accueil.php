@@ -11,7 +11,9 @@
 		
 		
 		public function index(){
-			$this->render("index");
+                    require_once(CONTROLLER."Sujet.php");
+                        $Sujet = new controller_sujet();
+			$Sujet->liste();
 		}
 	}
 ?>

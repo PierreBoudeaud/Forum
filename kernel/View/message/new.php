@@ -3,20 +3,15 @@
 	<center>
             <?php
                 $sujet = $this->viewvar['sujet'];
-                $utilisateur = 1/*$this->viewvar['utilisateur']*/;
             ?>
-            <form action="<?php echo "create/{$sujet}/{$utilisateur}"?>" method="post">
+            <form action="<?php echo WEBROOT."message/create/{$sujet}/{$_SESSION['id']}";?>" method="post">
 		<table>
 		<tr>
-			<th>Titre</th>
-			<td><input type='text' name='text'></td>
-		</tr>
-		<tr>
-			<th>Description</th>
-                        <td><textarea name='text'></textarea></td>
+			<th>Message</th>
+                        <td><textarea name='message'></textarea></td>
 		</tr>
 		</table>
-                <input type='submit' value="Créer le sujet"><input type="button" id="annuler" value="Annuler">
+                <input type='submit' value="Créer le message"><input type="button" id="annuler" value="Annuler">
                 </form>
 	</center>
 	<script>				
@@ -25,7 +20,7 @@
                          *  Redirection au clic du bouton annuler
                          * */
                         $('#annuler').click(function(){
-                            window.location.href = '<?php echo WEBROOT."message/liste"; ?>';
+                            window.location.href = '<?php echo WEBROOT."message/liste/{$sujet}"; ?>';
                         });
  
 		});

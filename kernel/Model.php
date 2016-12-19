@@ -110,13 +110,13 @@
 				foreach($this as $key=>$val){
 					if(!in_array($key, $this->attribTech)){
 						$prop = "{$prop} {$key},";
-						$value = "{$value} '{$val}',";
+						$value = $value.'"'.$val.'",';
 					}
 				}
 				$prop = substr($prop, 0, -1);
 				$value = substr($value, 0, -1);
 				$req = "INSERT INTO {$this->table}({$prop}) VALUES({$value})";
-				echo "<br>".$req."<br>";
+				//echo "<br>".$req."<br>";
 				$bdd = $this->connexion();
 				$bool = $bdd->exec($req);
 				$bdd = null;

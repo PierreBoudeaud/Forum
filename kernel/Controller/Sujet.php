@@ -22,6 +22,14 @@
         public function newf(){
             $this->render('new');
         }
+		
+	public function create($idUtil){
+            $this->Sujet->setLib($_POST['titre']);
+            $this->Sujet->setDesc($_POST['desc']);
+            $this->Sujet->setIdUtil($idUtil);
+            $this->Sujet->create();
+            $this->liste();
+	}
         
     }
 ?>

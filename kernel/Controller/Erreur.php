@@ -16,5 +16,9 @@
 		public function e69(){
 			$this->render("e69");
 		}
+		
+		public function eu404(){
+			$this->render("eu404");
+		}
 	}
 ?>

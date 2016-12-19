@@ -37,7 +37,7 @@
 			});
                         
                         $('#annuler').click(function(){
-                            window.location.href = 'liste';
+                            window.location.href = '<?php echo WEBROOT; ?>';
                         });
  
 		});

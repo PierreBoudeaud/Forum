@@ -6,6 +6,7 @@
 		protected $pseudoutilisateur;
 		protected $emailutilisateur;
 		protected $mdputilisateur;
+		protected $avatarutilisateur;
 		
 		/**
 		*		__construct - Construit l'objet Model
@@ -13,13 +14,14 @@
 		*		@author BOUDEAUD P
 		*		@date 30/09/2016
 		*/
-		public function __construct($id=null, $pseudo=null, $eMail=null, $mDP=null){
+		public function __construct($id=null, $pseudo=null, $eMail=null, $mDP=null, $avatar = null){
 			//parent:: <=> super en Java
 			parent::__construct('utilisateur', 'idutilisateur', true, null);
 			$this->idutilisateur = $id;
 			$this->pseudoutilisateur = $pseudo;
 			$this->emailutilisateur = $eMail;
 			$this->mdputilisateur = $mDP;
+			$this->avatarutilisateur = $avatar;
 		}
 
 		/**
@@ -44,6 +46,10 @@
 		public function getmDP(){
 			return $this->mdputilisateur;
 		}
+		
+		public function getAvatar(){
+			return $this->avatarutilisateur;
+		}
 
 		public function setId($id){
 			$this->idutilisateur = $id;
@@ -59,6 +65,10 @@
 
 		public function setMDP($mDP){
 			$this->mdputilisateur = $mDP;
+		}
+		
+		public function setAvatar($avatar){
+			$this->avatarutilisateur = $avatar;
 		}
 
 	}
