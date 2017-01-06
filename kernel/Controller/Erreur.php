@@ -17,8 +17,12 @@
 			$this->render("e69");
 		}
 		
-		public function eu404(){
-			$this->render("eu404");
+		public function eu401(){
+			$this->render("eu401");
+		}
+		
+		public function e406(){
+			$this->render("e406");
 		}
 	}
 ?>

@@ -42,7 +42,6 @@ $(document).ready(function(){
 		
 		$( '#deconnexion' ).on( 'click', function() {
 	     	window.location.href = '".WEBROOT."utilisateur/deconnexion';
-	    	alert('".WEBROOT."/utilisateur/deconnexion');
 	    });
 	  });
 		

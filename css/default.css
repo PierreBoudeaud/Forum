@@ -20,6 +20,10 @@ html, body{
 	color: white;
 }
 
+#content table{
+	vertical-align: middle;
+}
+
 #content a{
 	text-decoration: none;
 	color: white;
@@ -27,7 +31,7 @@ html, body{
 
 table{
 	background-color: rgba(0, 0, 0, 0.6);
-	text-align : center;
+	text-align: center;
 	color: white;
 }
 

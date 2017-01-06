@@ -7,6 +7,7 @@
 		protected $emailutilisateur;
 		protected $mdputilisateur;
 		protected $avatarutilisateur;
+		protected $typecompteutilisateur;
 		
 		/**
 		*		__construct - Construit l'objet Model
@@ -22,6 +23,7 @@
 			$this->emailutilisateur = $eMail;
 			$this->mdputilisateur = $mDP;
 			$this->avatarutilisateur = $avatar;
+			$this->typecompteutilisateur = 0;
 		}
 
 		/**
@@ -50,6 +52,10 @@
 		public function getAvatar(){
 			return $this->avatarutilisateur;
 		}
+		
+		public function getTypeCompte(){
+			return $this->typecompteutilisateur;
+		}
 
 		public function setId($id){
 			$this->idutilisateur = $id;
@@ -69,6 +75,10 @@
 		
 		public function setAvatar($avatar){
 			$this->avatarutilisateur = $avatar;
+		}
+		
+		public function setTypeCompte($type){
+			$this->typecompteutilisateur = $type;
 		}
 
 	}

@@ -116,7 +116,6 @@
 				$prop = substr($prop, 0, -1);
 				$value = substr($value, 0, -1);
 				$req = "INSERT INTO {$this->table}({$prop}) VALUES({$value})";
-				//echo "<br>".$req."<br>";
 				$bdd = $this->connexion();
 				$bool = $bdd->exec($req);
 				$bdd = null;
