@@ -16,7 +16,6 @@
 	define("CSS", WEBROOT."css/");//Racine du dossier css
 	define("IMG", WEBROOT."img/");//Racine du dossier img
 	
-	
 	/*echo '<pre>';
 		print_r($_SERVER);//Affichage des informations serveur
 	echo '</pre>';*/
@@ -30,7 +29,7 @@
 		$split = explode("/", $_GET['p']);
 		$controller = $split['0'];
 	}
-	
+	$controller = ucfirst($controller);	
 	//Test méthode
 	if (empty($split)){
 		$method = "index";
@@ -56,5 +55,5 @@
 		$erreur = new $temp();
 		call_user_func_array(array($erreur, $method), array());
 	}
-	
+
 	?>
