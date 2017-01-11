@@ -1,0 +1,8 @@
+Vérifier accée .htaccess
+	sinon ajouter dans la config apache
+		<Directory /var/www/*>
+			AllowOverride All
+		</Directory>
+Vérifier si rewrite activé sur apache avec phpinfo()
+	sinon activer avec la commande
+		#sudo a2enmod rewrite

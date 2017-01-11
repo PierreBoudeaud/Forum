@@ -7,9 +7,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="<?php echo CSS.$this->layout.".css" ?>">
+		<link rel="stylesheet" type="text/css" href="<?php echo CSS.$this->layout.".css" ?>"/>
+		<link rel="icon" type="image/png" href="<?php echo IMG."favicon.png" ?>"/>
 		<meta charset="utf-8">
-		<title></title>
+		<title>Forum SLAM 5</title>
 	</head>
 	
 	<body>
