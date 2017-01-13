@@ -46,8 +46,9 @@
 			$this->Utilisateur->setMDP(password_hash($_POST['mdp'], PASSWORD_DEFAULT));
 			$this->Utilisateur->setAvatar(md5( strtolower( trim( $_POST['email'] ) ) ));
 			$this->Utilisateur->create();
-			$this->liste();
-			var_dump($this->Utilisateur);
+			require_once(CONTROLLER.'Accueil.php');
+			$Accueil = new controller_accueil();
+			$Accueil->index();
 		}
 		
 		/**
