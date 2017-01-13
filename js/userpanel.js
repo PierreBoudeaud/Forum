@@ -43,6 +43,10 @@ $(document).ready(function(){
 		$( '#deconnexion' ).on( 'click', function() {
 	     	window.location.href = '".WEBROOT."utilisateur/deconnexion';
 	    });
+		
+		$( '#profil' ).on( 'click', function() {
+			window.location.href = 'http://www.google.fr';
+		});
 	  });
 		
 });

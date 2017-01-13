@@ -49,17 +49,21 @@
 								}
 							});
 					
-								$( '#connexion' ).on( 'click', function() {
-									$( '#dialog' ).dialog( 'open' );
-								});
+							$( '#connexion' ).on( 'click', function() {
+								$( '#dialog' ).dialog( 'open' );
+							});
 					
-									$( '#creation' ).on( 'click', function() {
-										window.location.href = '".WEBROOT."utilisateur/newf';
-									});
+							$( '#creation' ).on( 'click', function() {
+								window.location.href = '".WEBROOT."utilisateur/newf';
+							});
 					
-										$( '#deconnexion' ).on( 'click', function() {
-											window.location.href = '".WEBROOT."utilisateur/deconnexion';
+							$( '#deconnexion' ).on( 'click', function() {
+								window.location.href = '".WEBROOT."utilisateur/deconnexion';
 						    });
+							$( '#profil' ).on( 'click', function() {
+								window.location.href = '".WEBROOT."utilisateur/view/";
+								if(!empty($_SESSION['id'])){echo $_SESSION['id'];};
+							echo "';});
 						});
 					
 					});</script>";

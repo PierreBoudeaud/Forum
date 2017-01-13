@@ -1,23 +1,24 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.xx.x/css/uikit.min.css" />
+
 <?php
 
 	if(!empty($_SESSION['id'])){
 		$nomUtil_BDD = $_SESSION['pseudo'];
 		$imgUtil_BDD = "https://www.gravatar.com/avatar/".$_SESSION['avatar'];
 		
-		$lienConnexion =	"<a id='deconnexion'>"
-							."Déconnexion"
-							."</a>";
-		$lienCreation = "";
+		$premiereLigne = "<a id='profil'>Profil</a>";
+		
+		$secondeLigne =	"<a id='deconnexion'>Déconnexion</a>";
 		
 	}else{
 		$nomUtil_BDD = "Non connecté";
 		$imgUtil_BDD = "https://www.gravatar.com/avatar/00000000000000000000000000000000";
 		
-		$lienConnexion =	"<a id='connexion'>Connexion</a>";
-		$lienCreation = "<a id='creation'>Créer un compte</a>";
+		$secondeLigne =	"<a id='connexion'>Connexion</a>";
+		$premiereLigne = "<a id='creation'>Créer un compte</a>";
 		
 		echo "
 			
@@ -54,8 +55,8 @@
 		."<div id='infosUtilisateur'>"
 		.$nomUtil_BDD
 		."<br/>"
-		.$lienConnexion
+		.$premiereLigne
 		."</br>"
-	    .$lienCreation
+	    .$secondeLigne
 		."</div>";
 ?>

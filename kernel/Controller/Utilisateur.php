@@ -21,7 +21,7 @@
 		}
 		
 		public function liste(){
-			if($_SESSION['typeCompte'] == 1){
+			if(!empty($_SESSION['typeCompte']) && $_SESSION['typeCompte'] == 1){
 				$this->set($this->Utilisateur->find());
 				$this->render('liste');
 			}
@@ -55,7 +55,7 @@
 		*	@param $idUtil Identifiant de l'utilisateur supprimé de la bdd
 		*/
 		public function delete($idUtil){
-			if($_SESSION['typeCompte'] == 1 && $this->Utilisateur->delete($idUtil)){
+			if(!empty($_SESSION['typeCompte']) && $_SESSION['typeCompte'] == 1 && $this->Utilisateur->delete($idUtil)){
 				$this->render('liste');
 			}else{
 				require_once(CONTROLLER.'Erreur.php');

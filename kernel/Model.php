@@ -39,7 +39,7 @@
 			}
 		}
 		
-		private function TabPk($id){
+		/*private function TabPk($id){
 			$taille = sizeof($this->pk);
 			for($i=0; $i < $taille; $i++){
 				$tab[$this->pk[$i]] = $id[$id];
@@ -47,7 +47,7 @@
 			}
 			
 			return $tab;
-		}
+		}*/
 		
 		/**
 		*		lineExist - Test la ligne dans la BDD
