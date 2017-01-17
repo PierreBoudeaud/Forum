@@ -11,11 +11,11 @@
 			</tr>
 			<?php
 			foreach($this->viewvar as $sujet){
-                                echo "<tr>";
+				echo "<tr>";
 					echo "<td>{$sujet['libellesujet']}</td>";
 					echo "<td><a href='".WEBROOT."message/liste/{$sujet['idsujet']}'>{$sujet['descriptionsujet']}</a></td>";
-                                        echo "<td>{$sujet['utilisateursujet']['pseudoutilisateur']}</td>";
-                                echo "</tr>";
+                    echo "<td>{$sujet['utilisateursujet']['pseudoutilisateur']}</td>";
+                echo "</tr>";
 			}
 			?>
 		</table>

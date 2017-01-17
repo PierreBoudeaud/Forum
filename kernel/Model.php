@@ -110,7 +110,7 @@
 				foreach($this as $key=>$val){
 					if(!in_array($key, $this->attribTech)){
 						$prop = "{$prop} {$key},";
-						$value = $value.'"'.$val.'",';
+						$value = $value."'".htmlspecialchars($val)."',";
 					}
 				}
 				$prop = substr($prop, 0, -1);
@@ -172,7 +172,6 @@
 			$bool = $this->lineExist($id);
 			if($bool){
 				$req = "DELETE FROM {$this->table} WHERE {$this->pk} = '{$id}'";
-				echo $req;
 				$bdd = $this->connexion();
 				$bdd->exec($req);
 				$bdd = null;

@@ -8,6 +8,12 @@
 			parent::__construct($this->models);
 		}
 		
+		private function charger_erreur(){
+			require_once(CONTROLLER.'Erreur.php');
+			$Erreur = new controller_erreur();
+			$Erreur->e404();
+		}
+		
 		public function view($idUtil){
 			
 			if($_SESSION['typeCompte'] == 1 && $this->Utilisateur->read($idUtil)){
@@ -18,6 +24,15 @@
 				$this->charger_erreur();
 			}
 			
+		}
+		
+		public function profile(){
+			if(!empty($_SESSION['id']) && $this->Utilisateur->read($_SESSION['id'])){
+				$this->set($this->Utilisateur->toTable());
+				$this->render('profile');
+			}else{
+				$this->charger_erreur();
+			}
 		}
 		
 		public function liste(){
@@ -41,14 +56,20 @@
 		*	create - Récupère les données du formulaire et crée une ligne en bdd
 		*/
 		public function create(){
-			$this->Utilisateur->setPseudo($_POST['pseudo']);
-			$this->Utilisateur->setEmail($_POST['email']);
-			$this->Utilisateur->setMDP(password_hash($_POST['mdp'], PASSWORD_DEFAULT));
-			$this->Utilisateur->setAvatar(md5( strtolower( trim( $_POST['email'] ) ) ));
-			$this->Utilisateur->create();
-			require_once(CONTROLLER.'Accueil.php');
-			$Accueil = new controller_accueil();
-			$Accueil->index();
+			$check = $this->Utilisateur->find("pseudoutilisateur = '".$_POST['pseudo']."'");
+			if(empty($check[0]['pseudoutilisateur'])){
+				$this->Utilisateur->setPseudo($_POST['pseudo']);
+				$this->Utilisateur->setEmail($_POST['email']);
+				$this->Utilisateur->setMDP(password_hash($_POST['mdp'], PASSWORD_DEFAULT));
+				$this->Utilisateur->setAvatar(md5( strtolower( trim( $_POST['email'] ) ) ));
+				$this->Utilisateur->create();
+				require_once(CONTROLLER.'Accueil.php');
+				$Accueil = new controller_accueil();
+				$Accueil->index();
+			}
+			else{
+				$this->charger_erreur();
+			}
 		}
 		
 		/**
@@ -57,18 +78,12 @@
 		*/
 		public function delete($idUtil){
 			if(!empty($_SESSION['typeCompte']) && $_SESSION['typeCompte'] == 1 && $this->Utilisateur->delete($idUtil)){
-				$this->render('liste');
+				$this->liste();
 			}else{
 				require_once(CONTROLLER.'Erreur.php');
 				$Erreur = new controller_erreur();
-				$Erreur->eu406();
+				$Erreur->e406();
 			}
-		}
-		
-		private function charger_erreur(){
-			require_once(CONTROLLER.'Erreur.php');
-			$Erreur = new controller_erreur();
-			$Erreur->e404();
 		}
 		
 		public function connexion(){

@@ -61,9 +61,8 @@
 								window.location.href = '".WEBROOT."utilisateur/deconnexion';
 						    });
 							$( '#profil' ).on( 'click', function() {
-								window.location.href = '".WEBROOT."utilisateur/view/";
-								if(!empty($_SESSION['id'])){echo $_SESSION['id'];};
-							echo "';});
+								window.location.href = '".WEBROOT."utilisateur/profile';
+							});
 						});
 					
 					});</script>";

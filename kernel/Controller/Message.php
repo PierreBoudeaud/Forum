@@ -21,8 +21,8 @@
             }
             else{
                 $sujet = $this->Sujet->find('idsujet = '.$sujet);
-                $this->set(array("sujet" => $sujet[0]['libellesujet'], "idsujet" => $sujet[0]['idsujet'], "messages" => $this->Message->find('sujetmessage = '.$sujet[0]['idsujet'])));
-				$this->render('liste_sujet');
+                $this->set(array("sujet" => $sujet[0]['libellesujet'], "idsujet" => $sujet[0]['idsujet'], "messages" => $this->Message->find('sujetmessage = '.$sujet[0]['idsujet']), "listeSujet" => true));
+				$this->render('liste');
             }
         }
         
