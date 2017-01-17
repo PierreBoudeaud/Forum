@@ -19,8 +19,11 @@
 			<div id='userpanel'>
 				<?php 
 					echo $userpanel
-					."<script>$(document).ready(function(){
+					."<script>
+					$(document).ready(function(){
 						$( function() {
+							$('#loader').dialog('close');
+							
 							$( '#dialog').dialog({
 								autoOpen: false,
 								rezisable: true,

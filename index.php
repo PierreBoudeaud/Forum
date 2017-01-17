@@ -1,10 +1,10 @@
 <?php
-	session_start();
 	/**
 	*	@author BOUDEAUD P
 	*	@date 08/11/2016
 	*
 	*/
+	session_start();
 	setlocale(LC_TIME, 'fr_FR.utf8','fra');
 	define("ROOT", str_replace("index.php", "", $_SERVER['SCRIPT_FILENAME']));//Racine du serveur
 	define("WEBROOT", str_replace("index.php", "", $_SERVER['SCRIPT_NAME']));//Racine du projet
@@ -16,10 +16,34 @@
 	define("CSS", WEBROOT."css/");//Racine du dossier css
 	define("IMG", WEBROOT."img/");//Racine du dossier img
 	
+	if (ob_get_level() == 0) ob_start();
+        echo "
+	<link rel='stylesheet' href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'>
+	<script src='https://code.jquery.com/jquery-1.12.4.js'></script>
+	<script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
+	<div id='loader' title='Chargement en cours'>
+		<center>
+			<img src='".IMG."loading.gif' alt='Loading...'>
+			<p>Chargement en cours...</p>
+		</center>
+	</div>
+	
+	<script>
+		$( function() {
+			$( '#loader' ).dialog({
+				autoOpen: true
+			});
+		} );
+	</script>
+	";
+        ob_flush();
+        flush();
+
+		ob_end_flush();
+	
 	/*echo '<pre>';
 		print_r($_SERVER);//Affichage des informations serveur
 	echo '</pre>';*/
-	
 	//Test controller
 	if (empty($_GET['p'])){
 		$controller = "accueil";
@@ -37,6 +61,8 @@
 	else {
 		$method = $split['1'];
 	}
+	
+	
 	
 	require_once(CONTROLLER.$controller.".php");
 	$temp = "controller_".$controller;

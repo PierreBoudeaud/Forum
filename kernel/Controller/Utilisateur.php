@@ -28,7 +28,14 @@
 		
 		public function profile(){
 			if(!empty($_SESSION['id']) && $this->Utilisateur->read($_SESSION['id'])){
-				$this->set($this->Utilisateur->toTable());
+				$utilisateur = $this->Utilisateur->toTable();
+				if($utilisateur['typecompteutilisateur'] == 0){
+					$utilisateur['typecompteutilisateur'] = "Utilisateur";
+				}
+				else{
+					$utilisateur['typecompteutilisateur'] = "Administrateur";
+				}
+				$this->set($utilisateur);
 				$this->render('profile');
 			}else{
 				$this->charger_erreur();
@@ -37,7 +44,7 @@
 		
 		public function liste(){
 			if(!empty($_SESSION['typeCompte']) && $_SESSION['typeCompte'] == 1){
-				$this->set($this->Utilisateur->find());
+				$this->set($this->Utilisateur->find(null, "idutilisateur"));
 				$this->render('liste');
 			}
 			else{

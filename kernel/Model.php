@@ -223,12 +223,17 @@
 		*		@author LUTAU T
 		*		@date 27/09/2016
 		*/
-		public function find($condition=null){
+		public function find($condition=null, $orderBy = null){
 			$req = "SELECT * FROM {$this->table}";
 			
 			if($condition != null){
 				$req = $req." WHERE {$condition}";
 			}
+			
+			if($orderBy != null){
+				$req = $req." ORDER BY {$orderBy}";
+			}
+			
 			$bdd = $this->connexion();
 			$rep = $bdd->query($req);
 			$bdd = null;

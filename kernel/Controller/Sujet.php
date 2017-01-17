@@ -15,7 +15,7 @@
         }
         
         public function liste(){
-            $this->set($this->Sujet->find());
+            $this->set($this->Sujet->find(null, "libellesujet, idsujet"));
             $this->render('liste');
         }
         

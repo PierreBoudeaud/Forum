@@ -16,12 +16,26 @@ html, body{
 	background-color: #cccccc;
 	background-image: url(https://visualhunt.com/photos/l/1/aerial-view-of-typewriter-eyeglasses-and-notebook-on-table.jpg);
 	background-size: cover;
-	height: calc(100% - 175px);
+	min-height: calc(100% - 175px);
+	height: cover;
 	color: white;
 }
 
 #content table{
 	vertical-align: middle;
+	width: 50%;
+}
+
+#test{
+	margin: 10px;
+}
+
+#content table img{
+	width: 128px;
+}
+
+#content .avatar{
+	width: 80px;
 }
 
 #content a{
@@ -67,8 +81,8 @@ table{
 #userpanel{
 	background-color: #C2C6D8;
 	postion: relative;
-	width: 10em;
-	height: 50%;
+	width: auto;
+	height: 3em;
 	padding: 5px;
 	margin-right: 10px;
 	float: right;
@@ -77,17 +91,30 @@ table{
 }
 
 #imgUtilisateur{
+	float: right;
 	display:inline-block;
 	vertical-align:middle;
 	height: 100%;
-        border-radius: 50%;
+    border-radius: 50%;
+	margin-right: 10px;
+	margin-left: 10px;
 }
 
 #infosUtilisateur{
-	float:right;
+	float: left;
 	font-size:80%;
 	vertical-align: middle;
 	text-align: middle;
+	visibility: hidden;
+	width: 0;
+	opacity: 0;
+	transition: visibility 0.5s, opacity 0.5s ease-in-out, width 0.5s;
+}
+
+#userpanel:hover>#infosUtilisateur{
+	width: 10em;
+	visibility: visible;
+	opacity: 1;
 }
 
 #menuNavigation{

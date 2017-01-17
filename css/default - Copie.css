@@ -1,0 +1,170 @@
+*{
+	margin:0px;
+	padding: 0px;
+}
+
+html, body{
+	font-family: century gothic;
+	background-color: #F3F2F0;
+	height:100%;
+}
+
+
+
+#content{
+	text-align: center;
+	background-color: #cccccc;
+	background-image: url(https://visualhunt.com/photos/l/1/aerial-view-of-typewriter-eyeglasses-and-notebook-on-table.jpg);
+	background-size: cover;
+	min-height: calc(100% - 175px);
+	height: cover;
+	color: white;
+}
+
+#content table{
+	vertical-align: middle;
+	width: 50%;
+}
+
+#test{
+	margin: 10px;
+}
+
+#content table img{
+	width: 128px;
+}
+
+#content .avatar{
+	width: 80px;
+}
+
+#content a{
+	text-decoration: none;
+	color: white;
+}
+
+table{
+	background-color: rgba(0, 0, 0, 0.6);
+	text-align: center;
+	color: white;
+}
+
+
+
+#header{
+	/*background-color: #424A8C;*/
+	background-image:linear-gradient(#3c4e4e, #717368);
+	width: 100%;
+	height: 100px;
+	margin:0px;
+	padding:0px;
+}
+
+#header a, #header a hover{
+    color : red;
+    cursor: pointer;
+    text-align = center;
+    text-decoration: none;
+}
+
+.connexLib{
+	align = right;
+}
+
+.obligatoire, #obligatoireDesc{
+	display: none;
+	color : red;
+}
+
+
+/* =============================== */
+#userpanel{
+	background-color: #C2C6D8;
+	postion: relative;
+	width: auto;
+	height: 3em;
+	padding: 5px;
+	margin-right: 10px;
+	float: right;
+	border-radius: 0px 0px 10px 10px;
+	
+}
+
+#imgUtilisateur{
+	float: right;
+	display:inline-block;
+	vertical-align:middle;
+	height: 100%;
+    border-radius: 50%;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+#infosUtilisateur{
+	float: left;
+	font-size:80%;
+	vertical-align: middle;
+	text-align: middle;
+	visibility: hidden;
+	width: 0;
+	opacity: 0;
+	transition: visibility 0.5s, opacity 0.5s ease-in-out, width 0.5s;
+}
+
+#userpanel:hover>#infosUtilisateur{
+	width: 10em;
+	visibility: visible;
+	opacity: 1;
+}
+
+#menuNavigation{
+	background-color: #424A8C;
+}
+
+.connexion{
+
+}
+
+.listeMenu{
+	
+}
+
+.elementMenu{
+	
+}
+
+.elementMenu:hover{
+	
+}
+
+.element-Menu-Actif{
+		
+}
+
+.element-Menu-Actif:hover{
+	
+}
+
+
+.lien-menu{
+	
+}
+
+.lien-menu:hover{
+	
+}
+
+.lien-menu:visited{
+	
+}
+/* =============================== */
+
+
+
+#footer{
+        text-align: center;
+	/*background-color: #424A8C;*/
+	background-image:linear-gradient(#717368, #3c4e4e);
+	height: 75px;
+	float:bottom;
+}	

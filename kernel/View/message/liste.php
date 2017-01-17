@@ -1,5 +1,6 @@
     <div id='content'>
             <center>
+			<p  style="color: rgba(0, 0, 0, 0)">_</p>
                 <meta charset="utf-8">
 	<?php
 	if(!empty($this->viewvar['listeSujet'])){
@@ -7,7 +8,7 @@
 			echo "<a href='".WEBROOT."message/newf/{$this->viewvar['idsujet']}/{$_SESSION['id']}'  style='color: gold'>Nouveau message</a>";
 		}
             ?>
-		<table border=1>
+		<table id="test" border=1>
                     <tr>
                         <td colspan='2'><?php echo $this->viewvar['sujet'] ?></td>
                         
@@ -16,7 +17,7 @@
 			foreach($this->viewvar['messages'] as $message){
 								echo "<tr>";
 					echo "	<td>
-								<img src='http://gravatar.com/avatar/{$message['utilisateurmessage']['avatarutilisateur']}'/>
+								<img class='avatar' src='http://gravatar.com/avatar/{$message['utilisateurmessage']['avatarutilisateur']}'/>
 								<p>{$message['utilisateurmessage']['pseudoutilisateur']}</p>
 							</td>";
                                         echo "  <td>
@@ -49,5 +50,6 @@
 		echo "</table>";
 	}
 	?>	
+	<p  style="color: rgba(0, 0, 0, 0)">_</p>
 	</center>
     </div>
