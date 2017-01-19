@@ -110,6 +110,7 @@
 				foreach($this as $key=>$val){
 					if(!in_array($key, $this->attribTech)){
 						$prop = "{$prop} {$key},";
+						$val = str_replace("'", "''", $val);
 						$value = $value."'".htmlspecialchars($val)."',";
 					}
 				}
@@ -223,7 +224,7 @@
 		*		@author LUTAU T
 		*		@date 27/09/2016
 		*/
-		public function find($condition=null, $orderBy = null){
+		public function find($condition=null, $orderBy = null, $nbLoopMax){
 			$req = "SELECT * FROM {$this->table}";
 			
 			if($condition != null){
@@ -242,7 +243,8 @@
 			while($result = $rep->fetch()){
 					$object = new $this->table();
 					$object->read($result['0']);
-					$tab[] = $object->totable();
+					$tab[] = $object->totable($nbLoopMax, 0);
+                                        //var_dump($tab);
 			}
 			$rep->closeCursor();
 			
@@ -254,12 +256,13 @@
 		*
 		*	@return Tab Tableau de valeurs
 		*/
-		public function totable(){
+		public function totable($loopMax, $nbLoop, $tab = null){
 			$tab = array();
 			foreach($this as $key=>$val){
 					if(!in_array($key, $this->attribTech)){
-                                            if(is_object($val)){
-                                                $val = $val->toTable();
+                                            if(is_object($val) && $nbLoop < $loopMax){
+                                                $nbLoop++;
+                                                $val = $val->toTable($loopMax, $nbLoop, $tab);
                                             }
 						$tab[$key] = $val;
 					}

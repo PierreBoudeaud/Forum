@@ -44,7 +44,7 @@
 		
 		public function liste(){
 			if(!empty($_SESSION['typeCompte']) && $_SESSION['typeCompte'] == 1){
-				$this->set($this->Utilisateur->find(null, "idutilisateur"));
+				$this->set($this->Utilisateur->find(null, "idutilisateur", 1));
 				$this->render('liste');
 			}
 			else{

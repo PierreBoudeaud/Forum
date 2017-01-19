@@ -23,7 +23,7 @@
 	<script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
 	<div id='loader' title='Chargement en cours'>
 		<center>
-			<img src='".IMG."loading.gif' alt='Loading...'>
+			<img src='https://media.giphy.com/media/h53aZhPiGKhr2/giphy.gif' alt='Loading...'>
 			<p>Chargement en cours...</p>
 		</center>
 	</div>
@@ -81,5 +81,4 @@
 		$erreur = new $temp();
 		call_user_func_array(array($erreur, $method), array());
 	}
-
 	?>

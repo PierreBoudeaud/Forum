@@ -63,12 +63,12 @@ table{
 #header a, #header a hover{
     color : red;
     cursor: pointer;
-    text-align = center;
+    text-align: center;
     text-decoration: none;
 }
 
 .connexLib{
-	align = right;
+	align: right;
 }
 
 .obligatoire, #obligatoireDesc{
@@ -104,11 +104,11 @@ table{
 	float: left;
 	font-size:80%;
 	vertical-align: middle;
-	text-align: middle;
+	text-align: center;
 	visibility: hidden;
 	width: 0;
 	opacity: 0;
-	transition: visibility 0.5s, opacity 0.5s ease-in-out, width 0.5s;
+	transition: visibility 0.8s, opacity 0.3s ease-in-out, width 0.8s;
 }
 
 #userpanel:hover>#infosUtilisateur{
@@ -163,7 +163,6 @@ table{
 
 #footer{
         text-align: center;
-	/*background-color: #424A8C;*/
 	background-image:linear-gradient(#717368, #3c4e4e);
 	height: 75px;
 	float:bottom;
