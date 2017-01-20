@@ -17,7 +17,7 @@
 		public function view($idUtil){
 			
 			if($_SESSION['typeCompte'] == 1 && $this->Utilisateur->read($idUtil)){
-				$this->set($this->Utilisateur->toTable(null, null, 1));
+				$this->set($this->Utilisateur->toTable(null, null));
 				$this->render('view');
 			}
 			else{
@@ -28,7 +28,7 @@
 		
 		public function profile(){
 			if(!empty($_SESSION['id']) && $this->Utilisateur->read($_SESSION['id'])){
-				$utilisateur = $this->Utilisateur->toTable(null, null, 1);
+				$utilisateur = $this->Utilisateur->toTable(null, null);
 				if($utilisateur['typecompteutilisateur'] == 0){
 					$utilisateur['typecompteutilisateur'] = "Utilisateur";
 				}
@@ -44,7 +44,7 @@
 		
 		public function liste(){
 			if(!empty($_SESSION['typeCompte']) && $_SESSION['typeCompte'] == 1){
-				$this->set($this->Utilisateur->find(null, "idutilisateur", 1));
+				$this->set($this->Utilisateur->find(null, "idutilisateur"));
 				$this->render('liste');
 			}
 			else{
@@ -63,7 +63,7 @@
 		*	create - Récupère les données du formulaire et crée une ligne en bdd
 		*/
 		public function create(){
-			$check = $this->Utilisateur->find("pseudoutilisateur = '".$_POST['pseudo']."'", null, 1);
+			$check = $this->Utilisateur->find("pseudoutilisateur = '".$_POST['pseudo']."'", null);
 			if(empty($check[0]['pseudoutilisateur'])){
 				$this->Utilisateur->setPseudo($_POST['pseudo']);
 				$this->Utilisateur->setEmail($_POST['email']);
@@ -99,7 +99,7 @@
 				$Erreur = new controller_erreur();
 				$Erreur->eu401();
 			}
-			$result = $this->Utilisateur->find("pseudoutilisateur = '".$_POST['pseudo']."'", null, 1);
+			$result = $this->Utilisateur->find("pseudoutilisateur = '".$_POST['pseudo']."'", null);
 			if(sizeof($result) == 1){
 				$this->Utilisateur->read($result[0]['idutilisateur']);
 				if($this->checkPassword($_POST['mdp'])){

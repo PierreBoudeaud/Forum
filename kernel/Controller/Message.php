@@ -16,13 +16,13 @@
         public function liste($sujet = null){
             
             if($sujet == null){
-                $this->set($this->Message->find(null, "idmessage", 2));
+                $this->set($this->Message->find(null, "idmessage", array("sujetmessage")));
                 $this->render('liste');
             }
             else{
                 $this->Sujet->read($sujet);
-				$sujet = $this->Sujet->totable(null, null,2);
-                $this->set(array("sujet" => $sujet['libellesujet'], "idsujet" => $sujet['idsujet'], "messages" => $this->Message->find('sujetmessage = '.$sujet['idsujet'], "idmessage", 2), "listeSujet" => true));
+				$sujet = $this->Sujet->totable();
+                $this->set(array("sujet" => $sujet['libellesujet'], "idsujet" => $sujet['idsujet'], "messages" => $this->Message->find('sujetmessage = '.$sujet['idsujet'], "idmessage", array("sujetmessage")), "listeSujet" => true));
 				$this->render('liste');
             }
         }

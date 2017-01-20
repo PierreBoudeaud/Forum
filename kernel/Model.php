@@ -224,7 +224,10 @@
 		*		@author LUTAU T
 		*		@date 27/09/2016
 		*/
-		public function find($condition=null, $orderBy = null, $nbLoopMax){
+		public function find($condition=null, $orderBy = null, $keyNotUse){
+			$keyNotUse = array_merge($keyNotUse, $this->attribTech);
+			// var_dump($keyNotUse);
+			
 			$req = "SELECT * FROM {$this->table}";
 			
 			if($condition != null){
@@ -243,11 +246,11 @@
 			while($result = $rep->fetch()){
 					$object = new $this->table();
 					$object->read($result['0']);
-					$tab[] = $object->totable($nbLoopMax, 0);
-                                        //var_dump($tab);
+					// var_dump($keyNotUse);
+					$tab[] = $object->totable($keyNotUse);
 			}
 			$rep->closeCursor();
-			
+			// var_dump($tab);
 			return($tab);
 		}
 		
@@ -256,14 +259,19 @@
 		*
 		*	@return Tab Tableau de valeurs
 		*/
-		public function totable($loopMax, $nbLoop, $tab = null){
+		public function totable($keyNotUse = array()){
+			/*echo "<p>this</p>";
+			var_dump($this);
+			echo "<p>keyNotUse</p>";
+			var_dump($keyNotUse);*/
 			$tab = array();
 			foreach($this as $key=>$val){
-					if(!in_array($key, $this->attribTech)){
-                                            if(is_object($val) && $nbLoop < $loopMax){
-                                                $nbLoop++;
-                                                $val = $val->toTable($loopMax, $nbLoop, $tab);
-                                            }
+					if(!in_array($key, $keyNotUse)){
+                        if(is_object($val)){
+							/*echo "<p>val</p>";
+							var_dump($val);*/
+							$val = $val->toTable($keyNotUse);
+                        }
 						$tab[$key] = $val;
 					}
 				}

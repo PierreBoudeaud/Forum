@@ -81,4 +81,5 @@
 		$erreur = new $temp();
 		call_user_func_array(array($erreur, $method), array());
 	}
+	echo xdebug_time_index();
 	?>
