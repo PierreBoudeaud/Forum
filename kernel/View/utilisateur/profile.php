@@ -14,6 +14,10 @@
 			echo "</tr>";
 			
 			echo "<tr>";
+				echo "<th colspan='2'><button id='changePassword' class='ui-button ui-widget ui-corner-all'>Modifier le mot de passe</button></th>";
+			echo "</tr>";
+			
+			echo "<tr>";
 				echo "<th>Email</th>";
 				echo "<td>{$utilisateur['emailutilisateur']}</td>";
 			echo "</tr>";
@@ -30,6 +34,8 @@
 		</table>
 	</center>
 	<script>
-		
+		$("#changePassword").click(function(){
+			window.location.href = "<?php echo WEBROOT."utilisateur/changepassword"; ?>";
+		});
 	</script>
 </div>

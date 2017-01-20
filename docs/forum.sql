@@ -65,7 +65,7 @@ CREATE TABLE `sujet` (
 -- Contenu de la table `sujet`
 --
 
-INSERT INTO `sujet` (`idsujet`, `libellesujet`, `descriptionsujet`, `utilisateursujet`) VALUES
+INSERT INTO sujet (idsujet, libellesujet, descriptionsujet, utilisateursujet) VALUES
 (4, 'Minecraft', 'Minecraft c\'est ma vie !!!', 4),
 (3, 'Les molÃ©cules', 'Les molÃ©cules c\'est mieux quand sa bouge !!!', 4),
 (5, 'Starcraft II', 'C\'est ma life', 4),
@@ -96,13 +96,13 @@ CREATE TABLE `utilisateur` (
 -- Contenu de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`idutilisateur`, `pseudoutilisateur`, `emailutilisateur`, `mdputilisateur`, `avatarutilisateur`) VALUES
-(4, 'pboudeaud', 'pierre.boudeaud@live.fr', '$2y$10$cl3.0GQat0WI7tVDXqLEE.4rp5O09x33tScQQ7wuDROxEGQHy6MFG', '8b775cbc5fea74e8359d41996066c6a4'),
-(5, 'admin', 'admin@devmb.fr', '$2y$10$f4ITcGLofP0vtmg7yowt0uJDcQhPLKvU59AYGcEm9HhSAqLAr0wdi', '44d1382cc5ed07ebc298c971908d6bba'),
-(6, 'lmarchand', 'laetitia-jb@outlook.com', '$2y$10$lhTZPvTIli4KdKl9HqGY0eAUEBTWHl5ZedRELsKdHxqQfwdZGYyfi', 'a2aed01df9f014789d6b2ac8a1067648'),
-(7, 'alpha022', 'valentin.boudeaud@live.fr', '$2y$10$ge9qTTLCPO.snvlwuyTKrOEZVFSe5M3GoDoe5d/3KredN8RA5WUd2', 'e0acd4cc7caae0147b9017f2118f2bf2'),
-(8, 'Rouky17', 'rouky@live.fr', '$2y$10$KWugrbXyTHZihXRc/tvMDOIiIc2XSB/zBL2bMNfaZgV.wqyC9ziFW', '088d2080888262adf70539a1d223b772'),
-(10, 'chokolie', 'nathalie.boudeaud@live.fr', '$2y$10$pGCFNn9vR.fnZF4qZtojh.2AMNnHOU7CBKmDu3W0mJbnaRZndDxP2', '224f19549fd468e0e8de328cc6be521d');
+INSERT INTO utilisateur (idutilisateur, pseudoutilisateur, emailutilisateur, mdputilisateur, avatarutilisateur, typecompteutilisateur) VALUES
+(4, 'pboudeaud', 'pierre.boudeaud@live.fr', '$2y$10$cl3.0GQat0WI7tVDXqLEE.4rp5O09x33tScQQ7wuDROxEGQHy6MFG', '8b775cbc5fea74e8359d41996066c6a4', 1),
+(5, 'admin', 'admin@devmb.fr', '$2y$10$f4ITcGLofP0vtmg7yowt0uJDcQhPLKvU59AYGcEm9HhSAqLAr0wdi', '44d1382cc5ed07ebc298c971908d6bba', 0),
+(6, 'lmarchand', 'laetitia-jb@outlook.com', '$2y$10$lhTZPvTIli4KdKl9HqGY0eAUEBTWHl5ZedRELsKdHxqQfwdZGYyfi', 'a2aed01df9f014789d6b2ac8a1067648', 0),
+(7, 'alpha022', 'valentin.boudeaud@live.fr', '$2y$10$ge9qTTLCPO.snvlwuyTKrOEZVFSe5M3GoDoe5d/3KredN8RA5WUd2', 'e0acd4cc7caae0147b9017f2118f2bf2', 0),
+(8, 'Rouky17', 'rouky@live.fr', '$2y$10$KWugrbXyTHZihXRc/tvMDOIiIc2XSB/zBL2bMNfaZgV.wqyC9ziFW', '088d2080888262adf70539a1d223b772', 0),
+(10, 'chokolie', 'nathalie.boudeaud@live.fr', '$2y$10$pGCFNn9vR.fnZF4qZtojh.2AMNnHOU7CBKmDu3W0mJbnaRZndDxP2', '224f19549fd468e0e8de328cc6be521d', 0);
 
 --
 -- Index pour les tables exportées

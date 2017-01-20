@@ -32,10 +32,13 @@
 				}
 			});
                         
-                        $('#annuler').click(function(){
-                            window.location.href = '<?php echo WEBROOT; ?>';
-                        });
- 
+            $('#annuler').click(function(){
+                window.location.href = '<?php echo WEBROOT; ?>';
+            });
+			
+			/*$("#submit").click(function(){
+				alert(test);
+			});*/
 		});
 	</script>
 </div>

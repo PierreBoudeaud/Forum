@@ -224,7 +224,7 @@
 		*		@author LUTAU T
 		*		@date 27/09/2016
 		*/
-		public function find($condition=null, $orderBy = null, $keyNotUse){
+		public function find($condition=null, $orderBy = null, $keyNotUse = array()){
 			$keyNotUse = array_merge($keyNotUse, $this->attribTech);
 			// var_dump($keyNotUse);
 			

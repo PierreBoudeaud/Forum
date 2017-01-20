@@ -8,16 +8,23 @@
 			parent::__construct($this->models);
 		}
 		
+		/**
+		*	charger_erreur() - Charge l'erreur 404
+		*/
 		private function charger_erreur(){
 			require_once(CONTROLLER.'Erreur.php');
 			$Erreur = new controller_erreur();
 			$Erreur->e404();
 		}
 		
+		/**
+		*	view() - Affiche les informations d'un utilisateur
+		*	@param idUtil Id de l'utilisateur à charger
+		*/
 		public function view($idUtil){
 			
 			if($_SESSION['typeCompte'] == 1 && $this->Utilisateur->read($idUtil)){
-				$this->set($this->Utilisateur->toTable(null, null));
+				$this->set($this->Utilisateur->toTable());
 				$this->render('view');
 			}
 			else{
@@ -26,9 +33,12 @@
 			
 		}
 		
+		/**
+		*	profile() - Affiche le profil de l'utilisateur
+		*/
 		public function profile(){
 			if(!empty($_SESSION['id']) && $this->Utilisateur->read($_SESSION['id'])){
-				$utilisateur = $this->Utilisateur->toTable(null, null);
+				$utilisateur = $this->Utilisateur->toTable();
 				if($utilisateur['typecompteutilisateur'] == 0){
 					$utilisateur['typecompteutilisateur'] = "Utilisateur";
 				}
@@ -42,9 +52,12 @@
 			}
 		}
 		
+		/**
+		*	liste - Affiche tout les utilisateurs dans la bdd (Sauf utilisateur supprimé)
+		*/
 		public function liste(){
 			if(!empty($_SESSION['typeCompte']) && $_SESSION['typeCompte'] == 1){
-				$this->set($this->Utilisateur->find(null, "idutilisateur"));
+				$this->set($this->Utilisateur->find("idutilisateur != 0", "idutilisateur"));
 				$this->render('liste');
 			}
 			else{
@@ -93,6 +106,10 @@
 			}
 		}
 		
+		/**
+		*	connexion - Teste le pseudo et le mot de passe et "crée" la session
+		*	Charge SESSION
+		*/
 		public function connexion(){
 			function erreur(){
 				require_once(CONTROLLER.'Erreur.php');
@@ -102,7 +119,7 @@
 			$result = $this->Utilisateur->find("pseudoutilisateur = '".$_POST['pseudo']."'", null);
 			if(sizeof($result) == 1){
 				$this->Utilisateur->read($result[0]['idutilisateur']);
-				if($this->checkPassword($_POST['mdp'])){
+				if(password_verify($_POST['mdp'], $this->Utilisateur->getMDP())){
 					$_SESSION['id'] = $this->Utilisateur->getId();
 					$_SESSION['pseudo'] = $this->Utilisateur->getPseudo();
 					$_SESSION['email'] = $this->Utilisateur->getEmail();
@@ -121,6 +138,9 @@
 			}
 		}
 		
+		/**
+		*	deconnexion - Deconnecte l'utilisateur et détruit la session
+		*/
 		public function deconnexion(){
 			unset($_SESSION['id']);
 			session_destroy();
@@ -128,10 +148,18 @@
 			$Accueil = new controller_accueil();
 			$Accueil->index();
 		}
-                
-        //Vérifie si mot de passe dans base est correcte à celui entrée
-        public function checkPassword($password){
-        	return(password_verify($password, $this->Utilisateur->getMDP()));
-        }
+        
+		/**
+		*	changePassword() - Affiche la page de changement de mot de passe ou le change dans la base
+		*/
+		public function changePassword($mdp = null){
+			if($mdp == null){
+				$this->render("changePassword");
+			}else{
+				$this->Utilisateur->setMDP($mdp);
+				$this->Utilisateur->update();
+				$this->profile();
+			}
+		}
 	}
 ?>
